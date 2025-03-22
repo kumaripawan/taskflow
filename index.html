@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow - To-Do List App</title>
+  <!-- Link to external CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>TaskFlow</h1>
+    <!-- Form to add a new task -->
+    <form id="task-form">
+      <input type="text" id="task-input" placeholder="Add a new task" required>
+      <button type="submit">Add Task</button>
+    </form>
+    <!-- Section to filter tasks -->
+    <div id="filter">
+      <button data-filter="all">All</button>
+      <button data-filter="completed">Completed</button>
+      <button data-filter="pending">Pending</button>
+    </div>
+    <!-- List of tasks -->
+    <ul id="task-list">
+      <!-- Tasks will be inserted here by JavaScript -->
+    </ul>
+  </div>
+
+  <!-- Link to external JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
