@@ -1,33 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TaskFlow - To-Do List App</title>
-  <!-- Link to external CSS -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#4caf50" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
 </head>
 <body>
-  <div class="container">
-    <h1>TaskFlow</h1>
-    <!-- Form to add a new task -->
-    <form id="task-form">
-      <input type="text" id="task-input" placeholder="Add a new task" required>
-      <button type="submit">Add Task</button>
-    </form>
-    <!-- Section to filter tasks -->
-    <div id="filter">
-      <button data-filter="all">All</button>
-      <button data-filter="completed">Completed</button>
-      <button data-filter="pending">Pending</button>
-    </div>
-    <!-- List of tasks -->
-    <ul id="task-list">
-      <!-- Tasks will be inserted here by JavaScript -->
-    </ul>
+  <div class="dark-mode-toggle">
+    <label>
+      <input type="checkbox" id="dark-toggle" />
+      🌙 Dark Mode
+    </label>
   </div>
 
-  <!-- Link to external JavaScript -->
-  <script src="script.js"></script>
+  <div class="app-header">
+    <h1>📝 TaskFlow</h1>
+    <p>Your clean and smart to-do list</p>
+  </div>
+
+  <div class="main-layout">
+    <div class="task-section">
+    <!-- Task Form -->
+    <form id="task-form">
+        <input type="text" id="task-input" placeholder="Add a new task" required />
+        <select id="project-select">
+          <option value="General">General</option>
+          <option value="Work">Work</option>
+          <option value="Personal">Personal</option>
+          <option value="Shopping">Shopping</option>
+        </select>
+
+
+        <select id="priority-select">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+
+        <input type="date" id="due-date" />
+        <input type="time" id="due-time" />
+        <select id="recurrence">
+          <option value="none">One-time</option>
+          <option value="daily">Every Day</option>
+          <option value="weekly">Every Week</option>
+          <option value="monthly">Every Month</option>
+        </select>
+
+
+        <button type="submit">Add Task</button>
+      </form>
+
+    <!-- Filter Buttons -->
+    <div id="filter">
+        <button data-filter="all">All</button>
+        <button data-filter="completed">Completed</button>
+        <button data-filter="pending">Pending</button>
+        <button data-filter="today">Today</button>
+        <button data-filter="upcoming">Upcoming</button>
+      </div>
+      <div id="progress-container">
+        <div id="progress-text">Progress: 0 of 0 completed</div>
+        <div id="progress-bar-bg">
+          <div id="progress-bar-fill"></div>
+        </div>
+      </div>
+
+
+    <!-- Task List -->
+    <ul id="task-list"></ul>
+  </div>
+
+  <div class="calendar-section">
+    <h2>📅 Calendar View</h2>
+    <div id="calendar"></div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBjG6ri4XdpnkeYVSE7wFdVae7lpeD3uN4",
+      authDomain: "taskflow-fdf73.firebaseapp.com",
+      projectId: "taskflow-fdf73",
+      storageBucket: "taskflow-fdf73.appspot.com",
+      messagingSenderId: "677875091730",
+      appId: "1:677875091730:web:67271f60a3c83426220bcb",
+      measurementId: "G-0E2E8JB9F8"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const analytics = getAnalytics(app);
+
+    window.db = db;
+  </script>
+
+  <div id="reminder-toast" class="toast"></div>
+<audio id="reminder-sound" src="reminder.mp3" preload="auto"></audio>
+
+<script type="module" src="script.js"></script>
 </body>
+
+
 </html>
